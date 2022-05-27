@@ -18,6 +18,8 @@ import {
 import PageCounter from './Components/PageCounter';
 import data from './api/data';
 
+import { useDispatch } from 'react-redux';
+
 const ProductPage = ({ setCard }) => {
   const { productId } = useParams();
 
@@ -28,6 +30,8 @@ const ProductPage = ({ setCard }) => {
   const { name, status, composition, image, price } = product;
   const compositionList = composition.split(', ');
 
+  const dispatch = useDispatch();
+
   const addProductToCard = () => {
     const data = {
       name: name,
@@ -37,18 +41,23 @@ const ProductPage = ({ setCard }) => {
       image: image
     };
 
-    setCard(prevState => {
-      if (prevState.length === 0) return [data];
-
-      const items = prevState;
-
-      if (!items.some(i => i.id == data.id)) items.push(data);
-      const products = items.map(item => item.id != data.id ? item : data);
-
-      return [
-        ...products
-      ]
+    dispatch({
+      type: 'ADD_CASH',
+      payload: 5
     });
+
+    // setCard(prevState => {
+    //   if (prevState.length === 0) return [data];
+
+    //   const items = prevState;
+
+    //   if (!items.some(i => i.id == data.id)) items.push(data);
+    //   const products = items.map(item => item.id != data.id ? item : data);
+
+    //   return [
+    //     ...products
+    //   ]
+    // });
   }
 
   return (

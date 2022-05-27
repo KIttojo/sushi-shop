@@ -12,11 +12,14 @@ import {
   ModalFooter
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-const UserModal = ({ isOpen, onClose, setUserInfo, setNotAuth }) => {
+const UserModal = ({ isOpen, onClose, setNotAuth }) => {
   const [tmpUser, setTmpUser] = useState({name: '', phone: ''});
   const initialRef = useRef();
   const finalRef = useRef();
+
+  const dispatch = useDispatch();
 
   const handleChange = (type, value) => {
     setTmpUser(previous => {
@@ -28,7 +31,10 @@ const UserModal = ({ isOpen, onClose, setUserInfo, setNotAuth }) => {
 
   const submitUser = () => {
     if (tmpUser.name && tmpUser.phone) {
-      setUserInfo(tmpUser);
+      dispatch({
+        type: 'SET_USER',
+        payload: tmpUser
+      })
       setNotAuth(false);
     }
   }
