@@ -46,18 +46,18 @@ const ProductPage = ({ setCard }) => {
       payload: 5
     });
 
-    // setCard(prevState => {
-    //   if (prevState.length === 0) return [data];
+    setCard(prevState => {
+      if (prevState.length === 0) return [data];
 
-    //   const items = prevState;
+      const items = prevState;
 
-    //   if (!items.some(i => i.id == data.id)) items.push(data);
-    //   const products = items.map(item => item.id != data.id ? item : data);
+      if (!items.some(i => i.id == data.id)) items.push(data);
+      const products = items.map(item => item.id != data.id ? item : data);
 
-    //   return [
-    //     ...products
-    //   ]
-    // });
+      return [
+        ...products
+      ]
+    });
   }
 
   return (

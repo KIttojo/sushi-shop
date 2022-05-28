@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   Flex,
   Box,
@@ -10,9 +11,11 @@ import {
   Heading,
   useColorModeValue,
 } from '@chakra-ui/react';
+import axios from 'axios';
 
 export default function SimpleCard({setUserInfo}) {
-  const [formData, setFormData] = useState({email: '', pass: ''});
+  const [formData, setFormData] = useState({email: '', password: ''});
+  let navigate = useNavigate();
 
   const handleInput = (type, val) => {
     setFormData(prev => {
@@ -24,9 +27,12 @@ export default function SimpleCard({setUserInfo}) {
   };
   
   const logIn = () => {
-    //axios.post via email and pass from formData
-    //if successfully, then save user by calling:
-    // .then(res => setUserInfo(res))
+    axios.post('http://localhost:8080/api/authenticate', { ...formData })
+      .then((res) => {
+        setUserInfo({ ...res.data.user })
+        navigate('/admin/dashboard')
+      })
+      .catch((err) => console.log(err))
   }
 
   return (
@@ -50,10 +56,11 @@ export default function SimpleCard({setUserInfo}) {
             </FormControl>
             <FormControl id="password">
               <FormLabel>Пароль</FormLabel>
-              <Input type="password" onChange={(e) => handleInput('pass', e.target.value)}/>
+              <Input type="password" onChange={(e) => handleInput('password', e.target.value)}/>
             </FormControl>
             <Stack spacing={10}>
               <Button
+                onClick={ logIn }
                 bg={'tomato'}
                 color={'white'}
                 _hover={{

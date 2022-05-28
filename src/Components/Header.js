@@ -14,7 +14,7 @@ import { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
-const Header = ({ card, isOpen, onOpen, onClose }) => {
+const Header = ({ card, isOpen, onOpen, onClose, setUserInfo }) => {
   const [notAuth, setNotAuth] = useState(true);
 
   const state = useSelector(state => state.user);
@@ -26,6 +26,7 @@ const Header = ({ card, isOpen, onOpen, onClose }) => {
         isOpen={notAuth || isOpen}
         onClose ={onClose}
         setNotAuth={setNotAuth}
+        setUserInfo={setUserInfo}
       />
 
       <Center w='100%' maxW='900px' mx='30px' color='white'>

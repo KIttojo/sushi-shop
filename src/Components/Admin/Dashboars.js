@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Center,
   TableContainer,
@@ -13,62 +13,65 @@ import {
   Tfoot,
   Badge
 } from "@chakra-ui/react";
+import axios from "axios";
 
-const orders = [
-  {
-    userName: 'John Smith',
-    phone: '89514900000',
-    order: [
-      {
-        name: 'Суши 1',
-        count: 1,
-        pricePerItem: 590
-      },
-      {
-        name: 'Суши 2',
-        count: 2,
-        pricePerItem: 590
-      }
-    ]
-  },
-  {
-    userName: 'Denis Kikot',
-    phone: '89514900000',
-    order: [
-      {
-        name: 'Суши 1',
-        count: 3,
-        pricePerItem: 590
-      },
-      {
-        name: 'Суши 2',
-        count: 1,
-        pricePerItem: 590
-      }
-    ]
-  }
-]
+// const orders = [
+//   {
+//     userName: 'John Smith',
+//     phone: '89514900000',
+//     order: [
+//       {
+//         name: 'Суши 1',
+//         count: 1,
+//         pricePerItem: 590
+//       },
+//       {
+//         name: 'Суши 2',
+//         count: 2,
+//         pricePerItem: 590
+//       }
+//     ]
+//   },
+//   {
+//     userName: 'Denis Kikot',
+//     phone: '89514900000',
+//     order: [
+//       {
+//         name: 'Суши 1',
+//         count: 3,
+//         pricePerItem: 590
+//       },
+//       {
+//         name: 'Суши 2',
+//         count: 1,
+//         pricePerItem: 590
+//       }
+//     ]
+//   }
+// ]
 
 const TableRow = ({item}) => {
-  const {userName, phone, order} = item;
-  const itemList = order.map(i => {return `${i.name} (${i.count})`}).join(', ');
-  const orderCost = order.reduce(
-    (previousValue, currentValue) => previousValue + currentValue.count * currentValue.pricePerItem,
-    0
-  );
-
-  console.log(orderCost)
   return (
     <Tr>
-      <Td>{userName}</Td>
-      <Td>{phone}</Td>
-      <Td>{itemList}</Td>
-      <Td isNumeric>{orderCost}</Td>
+      <Td>{item.user}</Td>
+      <Td>{item.phone}</Td>
+      <Td>{item.info}</Td>
+      <Td isNumeric>{item.sum}</Td>
     </Tr>
   );
 }
 
 export default function Dashboard() {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/orders')
+      .then((res) => {
+        setOrders(res.data.orders)
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <Center>
       <TableContainer>
@@ -83,7 +86,7 @@ export default function Dashboard() {
             </Tr>
           </Thead>
           <Tbody>
-            {orders.map((order, id) => {
+            {orders && orders.map((order, id) => {
               return (
                 <React.Fragment key={`order-${id}`}>
                   <TableRow item={order}/>

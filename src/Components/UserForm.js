@@ -14,7 +14,7 @@ import {
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-const UserModal = ({ isOpen, onClose, setNotAuth }) => {
+const UserModal = ({ isOpen, onClose, setNotAuth, setUserInfo }) => {
   const [tmpUser, setTmpUser] = useState({name: '', phone: ''});
   const initialRef = useRef();
   const finalRef = useRef();
@@ -36,6 +36,7 @@ const UserModal = ({ isOpen, onClose, setNotAuth }) => {
         payload: tmpUser
       })
       setNotAuth(false);
+      setUserInfo({ ...tmpUser })
     }
   }
 
