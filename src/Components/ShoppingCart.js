@@ -38,6 +38,7 @@ const ShoppingCart = ({ card, setCard, userInfo }) => {
     })
       .then((res) => {
         setCard([]);
+        alert('Заказ выполнен!');
         navigate('/');
         console.log(res);
       })
