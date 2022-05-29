@@ -30,7 +30,7 @@ const ShoppingCart = ({ card, setCard, userInfo }) => {
       orderInfo += `${prod.name} (${prod.count}); `;
     }
     console.log(orderInfo, totalSum, userInfo.name, userInfo.phone)
-    axios.post('http://localhost:8080/api/orders', { 
+    axios.post('https://sushi-shopp.herokuapp.com/api/orders', { 
       user: userInfo.name,
       phone: userInfo.phone,
       info: orderInfo,

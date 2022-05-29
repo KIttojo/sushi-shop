@@ -27,7 +27,7 @@ export default function SimpleCard({setUserInfo}) {
   };
   
   const logIn = () => {
-    axios.post('http://localhost:8080/api/authenticate', { ...formData })
+    axios.post('https://sushi-shopp.herokuapp.com/api/authenticate', { ...formData })
       .then((res) => {
         setUserInfo({ ...res.data.user })
         navigate('/admin/dashboard')

@@ -65,7 +65,7 @@ export default function Dashboard() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/orders')
+    axios.get('https://sushi-shopp.herokuapp.com/api/orders')
       .then((res) => {
         setOrders(res.data.orders)
       })
